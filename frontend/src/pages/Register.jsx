@@ -7,7 +7,7 @@ const Register = () => {
 
   const handlerRegister = async(event)=>{
     event.preventDefault();
-    const res = await fetch("http://localhost:3000", {
+    const res = await fetch("http://localhost:3000/register", {
       method: "post",
       headers: {
         "Content-Type": "application/json"
@@ -15,12 +15,16 @@ const Register = () => {
       body: JSON.stringify({
         username,
         password
-      })
-    })
-    
+      }),
+    });
 
-    
+    const respond = await res.json()
+      
+    if(respond.status == 200){
+      console.log(respond);
+    }
   }
+
 
   return (
     <form action="" className="register" onSubmit={handlerRegister}>

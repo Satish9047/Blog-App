@@ -1,7 +1,15 @@
+const User = require("../models/user.model")
 
-
-const registerController = (req, res)=>{
+const registerController = async (req, res)=>{
     console.log(req.body);
+    const {username, password}= req.body;
+
+    const newUser = await User.create({
+        username,
+        password
+    })
+
+
     return res.status(200).json({success: "register successfull"})
 }
 
