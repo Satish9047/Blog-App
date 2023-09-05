@@ -1,9 +1,11 @@
 import {useState} from "react";
+import {useNavigate} from "react-router-dom"
 
 const Register = () => {
-
+  const navigate = useNavigate();
   const [email, setEmail]=useState("");
   const [password, setpassword]=useState("");
+
 
   const handlerRegister = async(event)=>{
     event.preventDefault();
@@ -18,10 +20,13 @@ const Register = () => {
       }),
     });
 
-    const respond = await res.json()
-      
-    if(respond.status == 200){
+    if(res.status == 200){
+      const respond = await res.json()
       console.log(respond);
+      navigate("/login")
+    }else{
+      const respond = await res.json();
+      console.log(respond.error)
     }
   }
 

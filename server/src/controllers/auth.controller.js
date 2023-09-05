@@ -2,54 +2,61 @@ const User = require("../models/user.model");
 const bcrypt = require("bcrypt");
 saltRounds = 8;
 
-const registerController = async (req, res)=>{
-    console.log(req.body);
-    const {email, password}= req.body;
+const registerController = async (req, res) => {
+  console.log(req.body);
+  const { email, password } = req.body;
 
-    const userExist = await User.findOne({email: email});
-    if(userExist){
-        console.warn("user already existed");
-        return res.status(400).json({error: "user already existed"});
-    }
+  const userExist = await User.findOne({ email: email });
+  if (userExist) {
+    console.warn("user already existed");
+    return res.status(400).json({ error: "user already existed" });
+  }
 
-    const hash = await bcrypt.hash(password, saltRounds)
-        .then((hash)=>{
-            console.log("password hashed",hash);
-            return hash
-        })
-        .catch((error)=>{
-            throw error
-        })
-
+  try {
+    const hash = await bcrypt.hash(password, saltRounds);
+    console.log(hash);
 
     const newUser = await User.create({
-        email,
-        password: hash
-    })
+      email,
+      password: hash,
+    });
     newUser.save();
     console.log("user saved in mongoDB");
-    return res.status(200).json({success: "register successfull"})
-}
+    return res.status(200).json({ success: "register successfull" });
+  } catch (error) {
+    console.error(error);
+  }
+};
 
+const loginController = async (req, res) => {
+  console.log(req.body);
 
-const loginController = async (req, res)=>{
-    console.log(req.body);
+  const { email, password } = req.body;
 
-    const {email, password}=req.body;
+  try {
+    const userExist = await User.findOne({ email: email });
 
-    const userExist = await User.findOne({email: email});
-    if(!userEmail){
-        console.log("user not found");
-        return res.status(400).json({error: "user doen't exist" })
+    if (!userExist) {
+      console.log("User not found");
+      return res.status(400).json({ error: "User doesn't exist" });
     }
 
-    
+    const passwordMatch = await bcrypt.compare(password, userExist.password);
 
-    return res.status(200).json({success: "register successfull"})
-}
+    if (!passwordMatch) {
+      console.log("Password didn't match!");
+      return res.status(400).json({ error: "Password didn't match" });
+    }
 
+    console.log("Password matched successfully");
+    return res.status(200).json({ success: "Login successful" });
+  } catch (error) {
+    console.error("An error occurred:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
 
 module.exports = {
-    registerController,
-    loginController
-}
+  registerController,
+  loginController,
+};
