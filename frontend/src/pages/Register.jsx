@@ -21,15 +21,15 @@ const Register = () => {
     });
 
     if(res.status == 200){
-      const respond = await res.json()
-      console.log(respond);
+      const resData = await res.json()
+      console.log(resData);
       navigate("/login")
     }else{
-      const respond = await res.json();
-      console.log(respond.error)
+      const resData = await res.json();
+      console.log(resData.error)
+      alert(resData.error)
     }
   }
-
 
   return (
     <form action="" className="register" onSubmit={handlerRegister}>

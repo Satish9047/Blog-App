@@ -1,6 +1,8 @@
 const User = require("../models/user.model");
 const bcrypt = require("bcrypt");
-saltRounds = 8;
+const jwt = require("jsonwebtoken");
+const saltRounds = 8;
+const jwtSecret = "JwtToken";
 
 const registerController = async (req, res) => {
   console.log(req.body);
@@ -48,8 +50,10 @@ const loginController = async (req, res) => {
       return res.status(400).json({ error: "Password didn't match" });
     }
 
+    const Token = await jwt.sign({email: userExist.email}, `${jwtSecret}`, { expiresIn: '10h' })
+
     console.log("Password matched successfully");
-    return res.status(200).json({ success: "Login successful" });
+    return res.status(200).json({ success: "Login successful", jwtToken: Token });
   } catch (error) {
     console.error("An error occurred:", error);
     return res.status(500).json({ error: "Internal server error" });

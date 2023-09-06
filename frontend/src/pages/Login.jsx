@@ -24,10 +24,12 @@ const Login = () => {
     if(res.status ==200){
       const resData = await res.json()
       console.log(resData);
+      localStorage.setItem("jwtToken", resData.jwtToken);
       navigate("/")
     }else{
       const resData = await res.json();
       console.log(resData.error);
+      alert(resData.error)
     }
   }
 
