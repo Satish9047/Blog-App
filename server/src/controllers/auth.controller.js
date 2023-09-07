@@ -53,7 +53,7 @@ const loginController = async (req, res) => {
     const Token = await jwt.sign({email: userExist.email}, `${jwtSecret}`, { expiresIn: '10h' })
 
     console.log("Password matched successfully");
-    return res.status(200).json({ success: "Login successful", jwtToken: Token });
+    return res.cookie("jwtToken", Token).status(200).json({ success: "Login successful" });
   } catch (error) {
     console.error("An error occurred:", error);
     return res.status(500).json({ error: "Internal server error" });

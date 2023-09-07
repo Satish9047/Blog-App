@@ -12,7 +12,7 @@ const app = express();
 const server = http.createServer(app);
 const PORT = process.env.PORT;
 
-app.use(cors());
+app.use(cors({credentials: true, origin: ["http://localhost:5173"]}));
 app.use(helmet());
 app.use(morgan("short"))
 

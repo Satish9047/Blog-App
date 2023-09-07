@@ -6,25 +6,24 @@ const Login = () => {
   const [password, setPassword]=useState("");
   const navigate = useNavigate();
 
-
   const handleLogin = async (e)=>{
     e.preventDefault();
     
     const res = await fetch("http://localhost:3000/login", {
       method: "post",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         email,
         password
-      })
+      }),
+      credentials: "include",
     })
 
     if(res.status ==200){
       const resData = await res.json()
       console.log(resData);
-      localStorage.setItem("jwtToken", resData.jwtToken);
       navigate("/")
     }else{
       const resData = await res.json();

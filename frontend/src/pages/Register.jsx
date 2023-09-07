@@ -1,11 +1,10 @@
-import {useState} from "react";
+import { useState} from "react";
 import {useNavigate} from "react-router-dom"
 
 const Register = () => {
   const navigate = useNavigate();
   const [email, setEmail]=useState("");
   const [password, setpassword]=useState("");
-
 
   const handlerRegister = async(event)=>{
     event.preventDefault();
