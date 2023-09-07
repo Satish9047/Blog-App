@@ -4,6 +4,7 @@ const helmet = require("helmet");
 const cors = require("cors");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
+const cookieParser = require("cookie-parser");
 
 const router = require("./router/router");
 require("dotenv").config();
@@ -14,10 +15,11 @@ const PORT = process.env.PORT;
 
 app.use(cors({credentials: true, origin: ["http://localhost:5173"]}));
 app.use(helmet());
-app.use(morgan("short"))
+app.use(morgan("tiny"))
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
+app.use(cookieParser())
 
 mongoose.connect(`${process.env.MONGODB_URL}`)
     .then(()=>{

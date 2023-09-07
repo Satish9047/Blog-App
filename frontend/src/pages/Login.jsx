@@ -6,6 +6,8 @@ const Login = () => {
   const [password, setPassword]=useState("");
   const navigate = useNavigate();
 
+  
+
   const handleLogin = async (e)=>{
     e.preventDefault();
     
@@ -17,12 +19,12 @@ const Login = () => {
       body: JSON.stringify({
         email,
         password
-      }),
-      credentials: "include",
+      })
     })
 
     if(res.status ==200){
       const resData = await res.json()
+      localStorage.setItem("jwtToken", resData.jwtToken);
       console.log(resData);
       navigate("/")
     }else{
