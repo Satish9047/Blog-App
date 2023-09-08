@@ -15,7 +15,7 @@ const PORT = process.env.PORT;
 
 app.use(cors({credentials: true, origin: ["http://localhost:5173"]}));
 app.use(helmet());
-app.use(morgan("tiny"))
+app.use(morgan("dev"))
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));

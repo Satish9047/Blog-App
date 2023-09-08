@@ -5,6 +5,7 @@ const jwtVerify = (req, res, next) => {
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
+        console.log("somthing is missing");
         return res.status(401).json({ error: "Authentication failed" });
     }
 
