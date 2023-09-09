@@ -24,7 +24,8 @@ const Header = () => {
       if (response.status === 200) {
         const userData = await response.json();
         console.log(userData.username);
-        setUser(userData.username);
+        setUser(`${userData.username}`);
+        console.log(user);
       } else {
         console.log("bad request from you")
         setUser("");
@@ -34,6 +35,10 @@ const Header = () => {
     verifyUser();
   }, []);
 
+  const logout = ()=>{
+    
+  }
+
   return (
     <header>
       <Link to="/" className="logo">
@@ -42,6 +47,7 @@ const Header = () => {
       {user ? (
         <nav>
           <Link to="/createPost">Create New Post</Link>
+          <a onClick={logout}>Logout</a>
         </nav>
       ) : (
         <nav>
