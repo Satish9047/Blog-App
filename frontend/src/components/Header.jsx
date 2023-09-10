@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../App.css";
 import { Link } from "react-router-dom";
 
@@ -6,6 +7,7 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   const [user, setUser] = useState("");
+  const navigate = useNavigate();
   useEffect(() => {
     const verifyUser = async () => {
 
@@ -33,10 +35,11 @@ const Header = () => {
     };
 
     verifyUser();
-  }, []);
+  }, [user]);
 
   const logout = ()=>{
-    
+      localStorage.clear("jwtToken");
+      navigate("/")
   }
 
   return (
@@ -47,7 +50,7 @@ const Header = () => {
       {user ? (
         <nav>
           <Link to="/createPost">Create New Post</Link>
-          <a onClick={logout}>Logout</a>
+          <label onClick={logout}>Logout</label>
         </nav>
       ) : (
         <nav>
