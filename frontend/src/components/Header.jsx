@@ -3,19 +3,17 @@ import { useNavigate } from "react-router-dom";
 import "../App.css";
 import { Link } from "react-router-dom";
 
-
-
 const Header = () => {
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
+
   useEffect(() => {
+    if (!localStorage.getItem("jwtToken")) {
+      console.log("Be our guest");
+      return setUser(null);
+    }
+
     const verifyUser = async () => {
-
-      if(!localStorage.getItem("jwtToken")){
-        console.log("Be our guest");
-        return setUser("");
-      }
-
       const response = await fetch("http://localhost:3000/profile", {
         method: "get",
         headers: {
@@ -26,21 +24,22 @@ const Header = () => {
       if (response.status === 200) {
         const userData = await response.json();
         console.log(userData.username);
-        setUser(`${userData.username}`);
+        setUser(userData.username);
         console.log(user);
       } else {
-        console.log("bad request from you")
-        setUser("");
+        console.log("bad request from you");
+        setUser(null);
       }
     };
 
     verifyUser();
   }, [user]);
 
-  const logout = ()=>{
-      localStorage.clear("jwtToken");
-      navigate("/")
-  }
+  const logout = () => {
+    localStorage.removeItem("jwtToken");
+    setUser(null);
+    navigate("/");
+  };
 
   return (
     <header>
@@ -50,7 +49,7 @@ const Header = () => {
       {user ? (
         <nav>
           <Link to="/createPost">Create New Post</Link>
-          <label onClick={logout}>Logout</label>
+          <a onClick={logout}>Logout</a>
         </nav>
       ) : (
         <nav>
