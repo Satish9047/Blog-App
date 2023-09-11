@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import "../App.css";
 import { Link } from "react-router-dom";
+import useUserStore from "../stores/userStores";
 
 const Header = () => {
-  const [user, setUser] = useState(null);
+  const user = useUserStore((state) => state.user); // Get user from Zustand
+  const setUser = useUserStore((state) => state.setUser);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,7 +35,7 @@ const Header = () => {
     };
 
     verifyUser();
-  }, [user]);
+  }, []);
 
   const logout = () => {
     localStorage.removeItem("jwtToken");
@@ -46,12 +48,14 @@ const Header = () => {
       <Link to="/" className="logo">
         MyBlog
       </Link>
-      {user ? (
+      {user && (
         <nav>
           <Link to="/createPost">Create New Post</Link>
           <a onClick={logout}>Logout</a>
         </nav>
-      ) : (
+      )}
+      
+      {!user && (
         <nav>
           <Link to="/login">Login</Link>
           <Link to="/register">Register</Link>
