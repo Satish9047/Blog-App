@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import useUserStore from "../stores/userStores";
 
 const Header = () => {
-  const user = useUserStore((state) => state.user); // Get user from Zustand
+  const user = useUserStore((state) => state.username); // Get user from Zustand
   const setUser = useUserStore((state) => state.setUser);
   const navigate = useNavigate();
 
