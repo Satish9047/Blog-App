@@ -38,7 +38,7 @@ const CreatePost = () => {
         <div>Create New Post</div>
         <input type="text" placeholder="Title" value={title} onChange={(ev)=>{setTitle(ev.target.value)}}/>
         <input type="text" placeholder="Summary" value={summary} onChange={(ev)=>setSummary(ev.target.value)}/>
-        <ReactQuill theme="snow" value={blog} onChange={(ev)=>setBlog(ev.target.value)}/>;
+        <ReactQuill theme="snow" value={blog} onChange={(value)=>setBlog(value)}/>;
         <button type="submit">Create</button>
       </form>
     </div>
