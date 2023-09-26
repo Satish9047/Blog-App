@@ -9,6 +9,9 @@ const blogPostSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    cover: {
+        type: String,
+    },
     blog: {
         type: String,
         required: true

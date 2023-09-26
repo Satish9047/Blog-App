@@ -1,5 +1,7 @@
 const express = require("express")
 const router = express.Router()
+const multer = require("multer");
+const upload = multer({ dest: './public/data/uploads/' })
 
 
 const {jwtVerify} =require("../middlewares/jwtAuth.middleware")
@@ -14,6 +16,6 @@ router.post("/login", loginController);
 
 router.get("/profile", jwtVerify, profileController);
 
-router.post("/createBlogPost", createBlogPostController)
+router.post("/createBlogPost", upload.single('avatar'), createBlogPostController)
 
 module.exports = router
