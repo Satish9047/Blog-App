@@ -19,6 +19,7 @@ const CreatePost = () => {
         body: JSON.stringify({
           title,
           summary,
+          coverImg,
           blog
         })
       });
@@ -39,8 +40,8 @@ const CreatePost = () => {
         <div>Create New Post</div>
         <input type="text" placeholder="Title" value={title} onChange={(ev)=>{setTitle(ev.target.value)}}/>
         <input type="text" placeholder="Summary" value={summary} onChange={(ev)=>setSummary(ev.target.value)}/>
-        <input type="file" value={coverImg} onChange={(ev)=>setCoverImg(ev.target.value)}/>
-        <ReactQuill theme="snow" value={blog} onChange={(value)=>setBlog(value)}/>;
+        <input type="file" value={coverImg} onChange={(ev)=>setCoverImg(ev.target.files[0])}/>
+        <ReactQuill theme="snow" value={blog} onChange={(value)=>setBlog(value)}/>
         <button type="submit">Create</button>
       </form>
     </div>

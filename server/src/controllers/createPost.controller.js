@@ -1,7 +1,7 @@
 const BlogPost = require("../models/blogPost.model");
 
 const createBlogPostController = async (req, res)=>{
-    const {title, summary, blog}=req.body;
+    const {title, summary, coverImg, blog}=req.body;
     const cover = req.file ? req.file.path : "";
     console.log(req.body);
     try {
