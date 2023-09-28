@@ -13,15 +13,10 @@ const jwtVerify = (req, res, next) => {
     console.log(jwtToken);
 
     jwt.verify(jwtToken, secret, (error, info) => {
-        if (error) {
+        if (error||!info) {
             console.log(error);
             return res.status(401).json({ error: "Invalid authentication token" });
         }
-        if (!info) {
-            console.log(info);
-            return res.status(401).json({ error: "Invalid authentication token" });
-        }
-        
         next();
     });
 };

@@ -16,6 +16,6 @@ router.post("/login", loginController);
 
 router.get("/profile", jwtVerify, profileController);
 
-router.post("/createBlogPost", upload.single('avatar'), createBlogPostController)
+router.post("/createBlogPost", jwtVerify, upload.single('avatar'), createBlogPostController)
 
 module.exports = router

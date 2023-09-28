@@ -2,7 +2,6 @@ const jwt = require("jsonwebtoken");
 const secret = `${process.env.JWT_SECRET}`
 const profileController = (req, res)=>{
 
-    console.log(req.headers.authorization);
     const token = req.headers.authorization
 
     const jwtToken = token.split(" ")[1];

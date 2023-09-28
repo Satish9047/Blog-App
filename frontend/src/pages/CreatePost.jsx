@@ -1,12 +1,21 @@
 import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css';
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import {useNavigate} from "react-router-dom";
 
 const CreatePost = () => {
   const [title, setTitle]=useState("");
   const [summary, setSummary]=useState("");
   const [coverImg, setCoverImg] = useState("");
   const [blog, setBlog]=useState("");
+  
+  const navigate = useNavigate();
+
+  useEffect(()=>{
+    if(!localStorage.getItem("jwtToken")){
+      navigate("/login");
+    }
+  }, []);
 
   const handleCreatePost = async(e)=>{
     e.preventDefault();
@@ -14,7 +23,8 @@ const CreatePost = () => {
       const response = await fetch("http://localhost:3000/createBlogPost", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "authorization": `Bearer ${localStorage.getItem("jwtToken")}`
         },
         body: JSON.stringify({
           title,
@@ -27,6 +37,9 @@ const CreatePost = () => {
       if(response.status == 200){
         const data = await response.json();
         console.log(data);
+      } else{
+        const data = await response.json();
+        console.error(data);
       }
       
     } catch (error) {

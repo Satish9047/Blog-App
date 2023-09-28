@@ -17,7 +17,7 @@ const Header = () => {
 
     const verifyUser = async () => {
       const response = await fetch("http://localhost:3000/profile", {
-        method: "get",
+        method: "GET",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
         },
@@ -27,7 +27,7 @@ const Header = () => {
         const userData = await response.json();
         console.log(userData.username);
         setUser(userData.username);
-        console.log(user);
+        console.log(userData.success);
       } else {
         console.log("bad request from you");
         setUser(null);
@@ -35,7 +35,7 @@ const Header = () => {
     };
 
     verifyUser();
-  }, []);
+  },[]);
 
   const logout = () => {
     localStorage.removeItem("jwtToken");
