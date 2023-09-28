@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 const CreatePost = () => {
   const [title, setTitle]=useState("");
   const [summary, setSummary]=useState("");
-  const [coverImg, setCoverImg] = useState("");
+  const [coverImg, setCoverImg] = useState();
   const [blog, setBlog]=useState("");
   
   const navigate = useNavigate();
@@ -19,6 +19,13 @@ const CreatePost = () => {
 
   const handleCreatePost = async(e)=>{
     e.preventDefault();
+    const data = new FormData();
+    data.append("title", title);
+    data.append("summary", summary);
+    data.append("coverImg", coverImg[0]);
+    data.append("blog", blog);
+
+    console.log(coverImg);
     try {
       const response = await fetch("http://localhost:3000/createBlogPost", {
         method: "POST",
@@ -26,12 +33,7 @@ const CreatePost = () => {
           "Content-Type": "application/json",
           "authorization": `Bearer ${localStorage.getItem("jwtToken")}`
         },
-        body: JSON.stringify({
-          title,
-          summary,
-          coverImg,
-          blog
-        })
+        body: JSON.stringify(data)
       });
 
       if(response.status == 200){
@@ -53,7 +55,7 @@ const CreatePost = () => {
         <div>Create New Post</div>
         <input type="text" placeholder="Title" value={title} onChange={(ev)=>{setTitle(ev.target.value)}}/>
         <input type="text" placeholder="Summary" value={summary} onChange={(ev)=>setSummary(ev.target.value)}/>
-        <input type="file" value={coverImg} onChange={(ev)=>setCoverImg(ev.target.files[0])}/>
+        <input type="file" onChange={(ev) => setCoverImg(ev.target.files)}/>
         <ReactQuill theme="snow" value={blog} onChange={(value)=>setBlog(value)}/>
         <button type="submit">Create</button>
       </form>

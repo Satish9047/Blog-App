@@ -51,7 +51,7 @@ const Header = () => {
       {user && (
         <nav>
           <Link to="/createPost">Create New Post</Link>
-          <a onClick={logout}>Logout</a>
+          <Link onClick={logout}>Logout</Link>
         </nav>
       )}
       
