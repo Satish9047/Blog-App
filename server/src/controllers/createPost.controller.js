@@ -27,7 +27,7 @@ const createBlogPostController = async (req, res)=>{
         })
         return res.status(200).json({success: "Blog post is saved in database"});
     } catch (error) {
-        console.error("Error while added post to the mongoDB", error)
+        console.error("Error while uploadig post to database", error)
     }
 
     
