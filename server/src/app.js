@@ -4,6 +4,7 @@ const helmet = require("helmet");
 const cors = require("cors");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
+const compression = require("compression");
 const cookieParser = require("cookie-parser");
 
 const router = require("./router/router");
@@ -16,6 +17,7 @@ const PORT = process.env.PORT;
 app.use(cors({credentials: true, origin: ["http://localhost:5173"]}));
 app.use(helmet());
 app.use(morgan("dev"));
+app.use(compression());
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
